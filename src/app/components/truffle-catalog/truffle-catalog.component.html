@@ -1,0 +1,38 @@
+<div class="catalog-container">
+  <h2 class="page-title">
+    <mat-icon>eco</mat-icon>
+    Truffle Catalog
+  </h2>
+
+  <div class="truffle-grid">
+    @for (truffle of truffles(); track truffle.id) {
+      <mat-card class="truffle-card">
+        <mat-card-header>
+          <mat-card-title>{{ truffle.name }}</mat-card-title>
+          <mat-card-subtitle>{{ truffle.origin }}</mat-card-subtitle>
+        </mat-card-header>
+        
+        <mat-card-content>
+          <p class="description">{{ truffle.description }}</p>
+          
+          <div class="truffle-details">
+            <mat-chip-set>
+              <mat-chip>
+                <mat-icon matChipAvatar>attach_money</mat-icon>
+                ${{ truffle.basePrice }}/g
+              </mat-chip>
+              <mat-chip>
+                <mat-icon matChipAvatar>calendar_month</mat-icon>
+                {{ truffle.season }}
+              </mat-chip>
+              <mat-chip>
+                <mat-icon matChipAvatar>location_on</mat-icon>
+                {{ truffle.origin }}
+              </mat-chip>
+            </mat-chip-set>
+          </div>
+        </mat-card-content>
+      </mat-card>
+    }
+  </div>
+</div>

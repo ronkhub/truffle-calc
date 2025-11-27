@@ -1,0 +1,94 @@
+<div class="calculator-container">
+  <mat-card class="calculator-card">
+    <mat-card-header>
+      <mat-card-title>
+        <mat-icon>calculate</mat-icon>
+        Price Calculator
+      </mat-card-title>
+      <mat-card-subtitle>Calculate truffle prices based on type, size and weight</mat-card-subtitle>
+    </mat-card-header>
+
+    <mat-card-content>
+      <div class="form-fields">
+        <mat-form-field appearance="outline" class="full-width">
+          <mat-label>Select Truffle Type</mat-label>
+          <mat-select 
+            [value]="selectedTruffleId()" 
+            (selectionChange)="onTruffleChange($event.value)">
+            @for (truffle of truffles(); track truffle.id) {
+              <mat-option [value]="truffle.id">
+                {{ truffle.name }} - ${{ truffle.basePrice }}/g
+              </mat-option>
+            }
+          </mat-select>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline" class="full-width">
+          <mat-label>Weight (grams)</mat-label>
+          <input 
+            matInput 
+            type="number" 
+            [value]="weight()" 
+            (input)="onWeightChange($any($event.target).valueAsNumber || 0)"
+            min="0" 
+            step="0.1">
+          <mat-hint>Enter weight in grams</mat-hint>
+        </mat-form-field>
+
+        @if (currentSizeTier(); as tier) {
+          <div class="size-tier-info">
+            <mat-icon>straighten</mat-icon>
+            <span>Size Tier: <strong>{{ tier.name }}</strong> ({{ tier.priceMultiplier }}x multiplier)</span>
+          </div>
+        }
+      </div>
+
+      @if (result(); as res) {
+        <div class="result-section">
+          <h3>Price Breakdown</h3>
+          
+          <div class="result-row">
+            <span class="label">Truffle:</span>
+            <span class="value">{{ res.truffle.name }}</span>
+          </div>
+          
+          <div class="result-row">
+            <span class="label">Base Price:</span>
+            <span class="value">${{ res.truffle.basePrice }}/g</span>
+          </div>
+          
+          <div class="result-row">
+            <span class="label">Weight:</span>
+            <span class="value">{{ res.weight }}g</span>
+          </div>
+          
+          <div class="result-row">
+            <span class="label">Size Tier:</span>
+            <span class="value">{{ res.sizeTier.name }} ({{ res.multiplier }}x)</span>
+          </div>
+          
+          <div class="result-row subtotal">
+            <span class="label">Subtotal (before multiplier):</span>
+            <span class="value">${{ res.basePrice.toFixed(2) }}</span>
+          </div>
+          
+          <div class="result-row total">
+            <span class="label">Total Price:</span>
+            <span class="value">${{ res.totalPrice.toFixed(2) }}</span>
+          </div>
+        </div>
+      }
+    </mat-card-content>
+
+    <mat-card-actions>
+      <button mat-raised-button color="primary" (click)="calculate()" [disabled]="!selectedTruffleId() || weight() <= 0">
+        <mat-icon>calculate</mat-icon>
+        Calculate
+      </button>
+      <button mat-button (click)="reset()">
+        <mat-icon>refresh</mat-icon>
+        Reset
+      </button>
+    </mat-card-actions>
+  </mat-card>
+</div>

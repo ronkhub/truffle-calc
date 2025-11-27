@@ -1,0 +1,41 @@
+<mat-sidenav-container class="app-container">
+  <mat-sidenav #sidenav mode="over" class="sidenav">
+    <mat-nav-list>
+      @for (item of navItems; track item.path) {
+        <a mat-list-item 
+           [routerLink]="item.path" 
+           routerLinkActive="active"
+           (click)="sidenav.close()">
+          <mat-icon matListItemIcon>{{ item.icon }}</mat-icon>
+          <span matListItemTitle>{{ item.label }}</span>
+        </a>
+      }
+    </mat-nav-list>
+  </mat-sidenav>
+
+  <mat-sidenav-content>
+    <mat-toolbar color="primary" class="toolbar">
+      <button mat-icon-button (click)="sidenav.toggle()" class="menu-button">
+        <mat-icon>menu</mat-icon>
+      </button>
+      <span class="app-title">{{ title }}</span>
+      <span class="spacer"></span>
+      
+      <!-- Desktop navigation -->
+      <nav class="desktop-nav">
+        @for (item of navItems; track item.path) {
+          <a mat-button 
+             [routerLink]="item.path" 
+             routerLinkActive="active">
+            <mat-icon>{{ item.icon }}</mat-icon>
+            {{ item.label }}
+          </a>
+        }
+      </nav>
+    </mat-toolbar>
+
+    <main class="main-content">
+      <router-outlet />
+    </main>
+  </mat-sidenav-content>
+</mat-sidenav-container>
