@@ -40,4 +40,18 @@ describe('SizeTierService', () => {
     expect(tier).toBeTruthy();
     expect(tier?.name).toBe('Premium');
   });
+
+  it('should handle boundary weights correctly (weight at boundary goes to next tier)', () => {
+    // At 20g boundary: goes to Medium (inclusive minWeight)
+    const tierAt20 = service.getSizeTierForWeight(20);
+    expect(tierAt20?.name).toBe('Medium');
+
+    // At 50g boundary: goes to Large
+    const tierAt50 = service.getSizeTierForWeight(50);
+    expect(tierAt50?.name).toBe('Large');
+
+    // At 100g boundary: goes to Extra Large
+    const tierAt100 = service.getSizeTierForWeight(100);
+    expect(tierAt100?.name).toBe('Extra Large');
+  });
 });

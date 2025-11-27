@@ -47,6 +47,12 @@ export class CalculatorComponent {
     this.calculate();
   }
 
+  onWeightInput(event: Event): void {
+    const input = event.target as HTMLInputElement;
+    const weight = input.valueAsNumber || 0;
+    this.onWeightChange(weight);
+  }
+
   onWeightChange(weight: number): void {
     this.weight.set(weight);
     this.calculate();
