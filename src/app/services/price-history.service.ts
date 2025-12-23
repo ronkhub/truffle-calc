@@ -56,12 +56,19 @@ export class PriceHistoryService {
       .sort((a, b) => b.timestamp.getTime() - a.timestamp.getTime());
   }
 
+  getAverageUnitPrice(truffleId: string): number | null {
+    const items = this.priceHistorySignal().filter(h => h.truffleId === truffleId);
+    if (items.length === 0) return null;
+    const sum = items.reduce((acc, h) => acc + h.basePrice, 0);
+    return sum / items.length;
+  }
+
   addPriceHistory(entry: PriceHistory): void {
     this.priceHistorySignal.update(current => [...current, entry]);
   }
 
   clearHistoryForTruffle(truffleId: string): void {
-    this.priceHistorySignal.update(current => 
+    this.priceHistorySignal.update(current =>
       current.filter(h => h.truffleId !== truffleId)
     );
   }

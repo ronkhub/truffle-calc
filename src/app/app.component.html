@@ -1,11 +1,11 @@
 <mat-sidenav-container class="app-container">
-  <mat-sidenav #sidenav mode="over" class="sidenav">
+  <mat-sidenav #sidenav [mode]="isDesktop() ? 'side' : 'over'" [opened]="isDesktop()" class="sidenav">
     <mat-nav-list>
       @for (item of navItems; track item.path) {
-        <a mat-list-item 
-           [routerLink]="item.path" 
+        <a mat-list-item
+           [routerLink]="item.path"
            routerLinkActive="active"
-           (click)="sidenav.close()">
+           (click)="!isDesktop() && sidenav.close()">
           <mat-icon matListItemIcon>{{ item.icon }}</mat-icon>
           <span matListItemTitle>{{ item.label }}</span>
         </a>
@@ -20,12 +20,12 @@
       </button>
       <span class="app-title">{{ title }}</span>
       <span class="spacer"></span>
-      
+
       <!-- Desktop navigation -->
       <nav class="desktop-nav">
         @for (item of navItems; track item.path) {
-          <a mat-button 
-             [routerLink]="item.path" 
+          <a mat-button
+             [routerLink]="item.path"
              routerLinkActive="active">
             <mat-icon>{{ item.icon }}</mat-icon>
             {{ item.label }}

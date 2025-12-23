@@ -1,0 +1,1 @@
+.admin-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px}.full-width{width:100%}.actions{display:flex;gap:8px;margin-top:8px}.season-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px}@media(max-width: 959px){.admin-grid{grid-template-columns:1fr}.season-grid{grid-template-columns:1fr}}/*# sourceMappingURL=truffle-admin.component.min.css.map */

@@ -5,4 +5,6 @@ export interface PriceHistory {
   basePrice: number;
   timestamp: Date;
   notes?: string;
+  // Optional pezzatura name or id
+  sizeTier?: string;
 }

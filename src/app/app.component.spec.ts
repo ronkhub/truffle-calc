@@ -36,7 +36,7 @@ describe('AppComponent', () => {
   it('should have navigation items', () => {
     const fixture = TestBed.createComponent(AppComponent);
     const app = fixture.componentInstance;
-    expect(app.navItems.length).toBe(4);
-    expect(app.navItems[0].label).toBe('Calculator');
+    expect(app.navItems.length).toBe(5);
+    expect(app.navItems[0].label).toBe('Calcolatore');
   });
 });

@@ -10,41 +10,36 @@ export class TruffleService {
       id: '1',
       name: 'Black Winter Truffle',
       description: 'Also known as Périgord truffle, prized for its intense aroma and flavor',
-      basePrice: 95,
-      origin: 'France',
-      season: 'November - March'
+      seasonStartMonth: 11,
+      seasonEndMonth: 3
     },
     {
       id: '2',
       name: 'White Alba Truffle',
       description: 'The most valuable truffle, known for its pungent, garlicky aroma',
-      basePrice: 350,
-      origin: 'Italy',
-      season: 'September - December'
+      seasonStartMonth: 9,
+      seasonEndMonth: 12
     },
     {
       id: '3',
       name: 'Summer Truffle',
       description: 'Milder flavor, perfect for everyday dishes',
-      basePrice: 45,
-      origin: 'Europe',
-      season: 'May - August'
+      seasonStartMonth: 5,
+      seasonEndMonth: 8
     },
     {
       id: '4',
       name: 'Burgundy Truffle',
       description: 'Autumn variety with earthy, hazelnut notes',
-      basePrice: 65,
-      origin: 'France',
-      season: 'September - November'
+      seasonStartMonth: 9,
+      seasonEndMonth: 11
     },
     {
       id: '5',
       name: 'Oregon Black Truffle',
       description: 'North American variety with fruity, earthy flavor',
-      basePrice: 40,
-      origin: 'USA',
-      season: 'December - March'
+      seasonStartMonth: 12,
+      seasonEndMonth: 3
     }
   ]);
 

@@ -7,7 +7,7 @@ import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatFormFieldModule } from '@angular/material/form-field';
-import { TruffleService, SizeTierService, PriceCalculatorService, CalculationResult } from '../../services';
+import { TruffleService, SizeTierService, PriceCalculatorService, CalculationResult, PriceHistoryService } from '../../services';
 
 @Component({
   selector: 'app-calculator',
@@ -29,6 +29,7 @@ export class CalculatorComponent {
   private truffleService = inject(TruffleService);
   private sizeTierService = inject(SizeTierService);
   private priceCalculatorService = inject(PriceCalculatorService);
+  private priceHistoryService = inject(PriceHistoryService);
 
   selectedTruffleId = signal<string>('');
   weight = signal<number>(0);
@@ -74,5 +75,9 @@ export class CalculatorComponent {
     this.selectedTruffleId.set('');
     this.weight.set(0);
     this.result.set(null);
+  }
+
+  avgUnitPrice(truffleId: string): number | null {
+    return this.priceHistoryService.getAverageUnitPrice(truffleId);
   }
 }
