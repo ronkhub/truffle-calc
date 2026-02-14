@@ -1,0 +1,97 @@
+<div class="calculator-container">
+  <mat-card class="calculator-card">
+    <mat-card-header>
+      <mat-card-title>
+        <mat-icon>calculate</mat-icon>
+        Calcolatore Prezzi
+      </mat-card-title>
+      <mat-card-subtitle>Calcola i prezzi dei tartufi in base a tipo, pezzatura e peso</mat-card-subtitle>
+    </mat-card-header>
+
+    <mat-card-content>
+      <div class="form-fields">
+        <mat-form-field appearance="outline" class="full-width">
+          <mat-label>Seleziona tipo di tartufo</mat-label>
+          <mat-select
+            [value]="selectedTruffleId()"
+            (selectionChange)="onTruffleChange($event.value)">
+            @for (truffle of truffles(); track truffle.id) {
+              <mat-option [value]="truffle.id">
+                {{ truffle.name }}
+                @if (avgUnitPrice(truffle.id) !== null) {
+                  - {{ avgUnitPrice(truffle.id)! | currency:'EUR':'symbol':'1.2-2' }}/g
+                }
+              </mat-option>
+            }
+          </mat-select>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline" class="full-width">
+          <mat-label>Peso (grammi)</mat-label>
+          <input
+            matInput
+            type="number"
+            [value]="weight()"
+            (input)="onWeightInput($event)"
+            min="0"
+            step="0.1">
+          <mat-hint>Inserisci il peso in grammi</mat-hint>
+        </mat-form-field>
+
+        @if (currentSizeTier(); as tier) {
+          <div class="size-tier-info">
+            <mat-icon>straighten</mat-icon>
+            <span>Pezzatura: <strong>{{ tier.name }}</strong> (moltiplicatore {{ tier.priceMultiplier }}x)</span>
+          </div>
+        }
+      </div>
+
+      @if (result(); as res) {
+        <div class="result-section">
+          <h3>Dettaglio prezzo</h3>
+
+          <div class="result-row">
+            <span class="label">Tartufo:</span>
+            <span class="value">{{ res.truffle.name }}</span>
+          </div>
+
+          <div class="result-row">
+            <span class="label">Prezzo medio (storico):</span>
+            <span class="value">{{ res.unitPrice | currency:'EUR':'symbol':'1.2-2' }}/g</span>
+          </div>
+
+          <div class="result-row">
+            <span class="label">Peso:</span>
+            <span class="value">{{ res.weight }}g</span>
+          </div>
+
+          <div class="result-row">
+            <span class="label">Pezzatura:</span>
+            <span class="value">{{ res.sizeTier.name }} ({{ res.multiplier }}x)</span>
+          </div>
+
+          <div class="result-row subtotal">
+            <span class="label">Subtotale (prima del moltiplicatore):</span>
+            <span class="value">{{ res.basePrice | currency:'EUR':'symbol':'1.2-2' }}</span>
+          </div>
+
+          <div class="result-row total">
+            <span class="label">Prezzo totale:</span>
+            <span class="value">{{ res.totalPrice | currency:'EUR':'symbol':'1.2-2' }}</span>
+          </div>
+        </div>
+      }
+    </mat-card-content>
+
+    <mat-card-actions>
+      <button mat-raised-button color="primary" (click)="calculate()" [disabled]="!selectedTruffleId() || weight() <= 0">
+        <mat-icon>calculate</mat-icon>
+        Calcola
+      </button>
+      <button mat-button (click)="reset()">
+        <mat-icon>refresh</mat-icon>
+        Reimposta
+      </button>
+    </mat-card-actions>
+  </mat-card>
+</div>

@@ -1,0 +1,91 @@
+<div class="catalog-container">
+  <h2 class="page-title">
+    <mat-icon>eco</mat-icon>
+    Catalogo Tartufi
+  </h2>
+
+  <div class="truffle-grid detailed">
+    @for (truffle of truffles(); track truffle.id) {
+      <mat-card class="truffle-card">
+        <mat-card-header>
+          <mat-card-title>{{ truffle.name }}</mat-card-title>
+        </mat-card-header>
+
+        <mat-card-content>
+          <div class="top-row">
+            <div class="general">
+              <p class="description">{{ truffle.description }}</p>
+              <mat-chip-set>
+                <mat-chip>
+                  <mat-icon matChipAvatar>calendar_month</mat-icon>
+                  {{ monthName(truffle.seasonStartMonth) }} - {{ monthName(truffle.seasonEndMonth) }}
+                </mat-chip>
+              </mat-chip-set>
+            </div>
+
+            <div class="sizes">
+              <h4>Pezzature & ultimo prezzo</h4>
+              <table class="sizes-table">
+                <thead><tr><th>Pezzatura</th><th>Range</th><th>Ultimo prezzo</th></tr></thead>
+                <tbody>
+                  <tr>
+                    <td>Piccolo</td>
+                    <td>
+                      @if (rangeFor(truffle,'piccolo')) {
+                        {{ rangeFor(truffle,'piccolo').min ?? ' - ' }} - {{ rangeFor(truffle,'piccolo').max ?? ' ∞' }} g
+                      } @else { - }
+                    </td>
+                    <td>
+                      @if (lastPriceFor(truffle.id,'Piccolo') !== null) {
+                        {{ lastPriceFor(truffle.id,'Piccolo')! | currency:'EUR':'symbol':'1.2-2' }}
+                      } @else { n/d }
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>Medio</td>
+                    <td>
+                      @if (rangeFor(truffle,'medio')) { {{ rangeFor(truffle,'medio').min ?? ' - ' }} - {{ rangeFor(truffle,'medio').max ?? ' ∞' }} g } @else { - }
+                    </td>
+                    <td>
+                      @if (lastPriceFor(truffle.id,'Medio') !== null) { {{ lastPriceFor(truffle.id,'Medio')! | currency:'EUR':'symbol':'1.2-2' }} } @else { n/d }
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>Grande</td>
+                    <td>
+                      @if (rangeFor(truffle,'grande')) { {{ rangeFor(truffle,'grande').min ?? ' - ' }} - {{ rangeFor(truffle,'grande').max ?? ' ∞' }} g } @else { - }
+                    </td>
+                    <td>
+                      @if (lastPriceFor(truffle.id,'Grande') !== null) { {{ lastPriceFor(truffle.id,'Grande')! | currency:'EUR':'symbol':'1.2-2' }} } @else { n/d }
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>Molto grande</td>
+                    <td>
+                      @if (rangeFor(truffle,'moltoGrande')) { {{ rangeFor(truffle,'moltoGrande').min ?? ' - ' }} - {{ rangeFor(truffle,'moltoGrande').max ?? ' ∞' }} g } @else { - }
+                    </td>
+                    <td>
+                      @if (lastPriceFor(truffle.id,'Molto grande') !== null) { {{ lastPriceFor(truffle.id,'Molto grande')! | currency:'EUR':'symbol':'1.2-2' }} } @else { n/d }
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+          <div class="history-chart">
+            <h4>Andamento prezzi</h4>
+            <div class="chart-placeholder">
+              <!-- simple price list as placeholder for chart -->
+              <ul>
+                @for (p of priceHistoryFor(truffle.id); track p.id) {
+                  <li>{{ p.timestamp | date:'yyyy-MM-dd' }} - {{ p.sizeTier || '-' }}: {{ p.basePrice | currency:'EUR':'symbol':'1.2-2' }}</li>
+                }
+              </ul>
+            </div>
+          </div>
+        </mat-card-content>
+      </mat-card>
+    }
+  </div>
+</div>

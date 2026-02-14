@@ -1,0 +1,56 @@
+<div class="size-tiers-container">
+  <h2 class="page-title">
+    <mat-icon>straighten</mat-icon>
+    Size Tiers
+  </h2>
+
+  <mat-card>
+    <mat-card-content>
+      <p class="description">
+        Size tiers affect the final price of truffles. Larger truffles command premium prices 
+        due to their rarity and culinary value.
+      </p>
+
+      <table mat-table [dataSource]="sizeTiers()" class="size-tiers-table">
+        <ng-container matColumnDef="name">
+          <th mat-header-cell *matHeaderCellDef>Size Tier</th>
+          <td mat-cell *matCellDef="let tier">{{ tier.name }}</td>
+        </ng-container>
+
+        <ng-container matColumnDef="range">
+          <th mat-header-cell *matHeaderCellDef>Weight Range</th>
+          <td mat-cell *matCellDef="let tier">{{ formatRange(tier.minWeight, tier.maxWeight) }}</td>
+        </ng-container>
+
+        <ng-container matColumnDef="multiplier">
+          <th mat-header-cell *matHeaderCellDef>Price Multiplier</th>
+          <td mat-cell *matCellDef="let tier">{{ tier.priceMultiplier }}x</td>
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+      </table>
+    </mat-card-content>
+  </mat-card>
+
+  <!-- Mobile-friendly card view -->
+  <div class="mobile-cards">
+    @for (tier of sizeTiers(); track tier.id) {
+      <mat-card class="tier-card">
+        <mat-card-header>
+          <mat-card-title>{{ tier.name }}</mat-card-title>
+        </mat-card-header>
+        <mat-card-content>
+          <div class="tier-detail">
+            <span class="label">Weight Range:</span>
+            <span class="value">{{ formatRange(tier.minWeight, tier.maxWeight) }}</span>
+          </div>
+          <div class="tier-detail">
+            <span class="label">Price Multiplier:</span>
+            <span class="value multiplier">{{ tier.priceMultiplier }}x</span>
+          </div>
+        </mat-card-content>
+      </mat-card>
+    }
+  </div>
+</div>

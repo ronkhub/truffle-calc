@@ -1,0 +1,8 @@
+.dialog-form { display: flex; flex-direction: column; gap: 12px; }
+.row { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+.section { margin: 16px 0 8px; font-size: 14px; font-weight: 600; }
+.size-grid { display: flex; flex-direction: column; gap: 8px; }
+.size-row { display: grid; grid-template-columns: 120px 1fr 1fr; align-items: center; gap: 8px; }
+.size-row .label { font-weight: 500; }
+.full-width { width: 100%; }
+.hint { color: rgba(0,0,0,0.6); font-size: 12px; margin: 4px 0 0; }

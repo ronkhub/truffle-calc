@@ -1,0 +1,53 @@
+<div class="price-history-container">
+  <h2 class="page-title">
+    <mat-icon>history</mat-icon>
+    Storico Prezzi
+  </h2>
+
+  <mat-card class="filter-card">
+    <mat-card-content>
+      <mat-form-field appearance="outline" class="full-width">
+        <mat-label>Filtro per tipo di tartufo</mat-label>
+        <mat-select
+          [value]="selectedTruffleId()"
+          (selectionChange)="onTruffleChange($event.value)">
+          <mat-option value="">Tutti i tartufi</mat-option>
+          @for (truffle of truffles(); track truffle.id) {
+            <mat-option [value]="truffle.id">{{ truffle.name }}</mat-option>
+          }
+        </mat-select>
+      </mat-form-field>
+    </mat-card-content>
+  </mat-card>
+
+  <div class="history-list">
+    @for (entry of filteredHistory(); track entry.id) {
+      <mat-card class="history-card">
+        <mat-card-header>
+          <mat-icon mat-card-avatar>trending_up</mat-icon>
+          <mat-card-title>{{ entry.truffleName }}</mat-card-title>
+          <mat-card-subtitle>{{ entry.timestamp | date:'mediumDate' }}</mat-card-subtitle>
+        </mat-card-header>
+        <mat-card-content>
+          <div class="history-detail">
+            <span class="label">Prezzo:</span>
+            <span class="value price">{{ entry.basePrice | currency:'EUR':'symbol':'1.2-2' }}/g</span>
+          </div>
+          @if (entry.notes) {
+            <div class="history-notes">
+              <mat-icon>notes</mat-icon>
+              <span>{{ entry.notes }}</span>
+            </div>
+          }
+        </mat-card-content>
+      </mat-card>
+    } @empty {
+      <mat-card class="empty-state">
+        <mat-card-content>
+          <mat-icon>inbox</mat-icon>
+          <p>Nessuno storico prezzi</p>
+        </mat-card-content>
+      </mat-card>
+    }
+  </div>
+</div>

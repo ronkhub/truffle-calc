@@ -1,0 +1,50 @@
+.catalog-container {
+  padding: 16px;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.page-title {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 24px;
+  color: #333;
+}
+
+.truffle-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 16px;
+}
+
+.truffle-card {
+  mat-card-header {
+    margin-bottom: 16px;
+  }
+
+  .description {
+    color: #666;
+    margin-bottom: 16px;
+    line-height: 1.5;
+  }
+
+  .truffle-details {
+    mat-chip-set {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+  }
+}
+
+// Mobile-first responsive adjustments
+@media (max-width: 599px) {
+  .catalog-container {
+    padding: 8px;
+  }
+
+  .truffle-grid {
+    grid-template-columns: 1fr;
+  }
+}
