@@ -1,0 +1,45 @@
+{
+  "name": "Truffle Calc",
+  "image": "mcr.microsoft.com/devcontainers/javascript-node:1-22-bookworm",
+  "features": {
+    "ghcr.io/devcontainers/features/github-cli:1": {},
+    "ghcr.io/devcontainers/features/desktop-lite:1": {}
+  },
+  "containerEnv": {
+    "CLAUDE_CODE_OAUTH_TOKEN": "${localEnv:CLAUDE_CODE_OAUTH_TOKEN}"
+  },
+  "mounts": [
+    "source=devprojects-shared-gcloud,target=/home/node/.config/gcloud,type=volume",
+    "source=devprojects-shared-gh,target=/home/node/.config/gh,type=volume",
+    "source=devprojects-shared-firebase,target=/home/node/.config/configstore,type=volume",
+    "source=devprojects-shared-claude,target=/home/node/.claude,type=volume"
+  ],
+  "postCreateCommand": "bash .devcontainer/setup.sh",
+  "postStartCommand": "bash .devcontainer/status.sh || true",
+  "forwardPorts": [4200, 6080, 5901],
+  "portsAttributes": {
+    "4200": {
+      "label": "Angular dev server (ng serve)",
+      "onAutoForward": "openBrowser"
+    },
+    "6080": {
+      "label": "Desktop (noVNC) - Chrome per verifica visiva",
+      "onAutoForward": "notify"
+    },
+    "5901": {
+      "label": "Desktop (VNC)",
+      "onAutoForward": "silent"
+    }
+  },
+  "customizations": {
+    "vscode": {
+      "extensions": [
+        "anthropic.claude-code",
+        "Angular.ng-template",
+        "dbaeumer.vscode-eslint",
+        "EditorConfig.EditorConfig"
+      ]
+    }
+  },
+  "remoteUser": "node"
+}
